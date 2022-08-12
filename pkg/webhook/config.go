@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/afero"
 
-	admissionregistration "k8s.io/api/admissionregistration/v1beta1"
+	admissionregistration "k8s.io/api/admissionregistration/v1"
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -185,7 +185,7 @@ func (f *Config) CreateValidationWebhookServerConfig(ctx context.Context, webhoo
 		ctxlog.Debugf(ctx, "Calculating validation webhook '%s'", webhook.Name)
 
 		sideEffect := admissionregistration.SideEffectClassNone
-		admissionReviewVersions := []string{"v1beta1", "v1"}
+		admissionReviewVersions := []string{"v1", "v1"}
 		if f.config.WebhookUseServiceRef {
 			clientConfig := admissionregistration.WebhookClientConfig{
 				CABundle: f.CaCertificate,
@@ -234,7 +234,7 @@ func (f *Config) CreateMutationWebhookServerConfig(ctx context.Context, name str
 		ctxlog.Debugf(ctx, "Calculating mutating webhook '%s'", webhook.Name)
 
 		sideEffect := admissionregistration.SideEffectClassNone
-		admissionReviewVersions := []string{"v1beta1", "v1"}
+		admissionReviewVersions := []string{"v1", "v1"}
 		if f.config.WebhookUseServiceRef {
 			clientConfig := admissionregistration.WebhookClientConfig{
 				Service: &admissionregistration.ServiceReference{
